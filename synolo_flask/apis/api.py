@@ -10,6 +10,7 @@ This is the
 """
 from flask_restplus import Api
 from .. import __version__
+from .exports import api as exports
 from .info import api as info
 from .uploads import api as uploads
 
@@ -25,4 +26,5 @@ api = Api(
 
 # Add the namespaces.
 api.add_namespace(info, path='/info')
+api.add_namespace(exports, path='/exports')
 api.add_namespace(uploads, path='/uploads')

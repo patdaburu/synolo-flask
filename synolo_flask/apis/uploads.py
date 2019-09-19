@@ -18,7 +18,7 @@ from jsendit import response, JSendStatus
 from werkzeug.datastructures import FileStorage
 from .. import __version__
 
-api = Namespace('uploads', description='Upload Endpoints')
+api = Namespace('uploads', description='Upload your data.')
 
 upload_parser = reqparse.RequestParser()
 upload_parser.add_argument(
@@ -42,8 +42,10 @@ class UploadStitchResource(Resource):
     @api.doc('Upload Data')
     @api.expect(upload_parser)
     def post(self, data: str):
-        args = upload_parser.parse_args()
 
+        # Parse the arguments.
+        args = upload_parser.parse_args()
+        # Retrieve the uploads.
         uploads: List[FileStorage] = args.get('file')
 
         # If no files are being uploaded...
