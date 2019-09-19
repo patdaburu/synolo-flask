@@ -104,3 +104,6 @@ ENV/
 
 # JetBrains
 .idea
+
+# Default App Directories
+/uploads

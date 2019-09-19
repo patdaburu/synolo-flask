@@ -11,6 +11,7 @@ This is the
 from flask_restplus import Api
 from .. import __version__
 from .info import api as info
+from .uploads import api as uploads
 
 API_ROOT: str = '/api'  #: the common root for API routes
 
@@ -23,4 +24,5 @@ api = Api(
 )
 
 # Add the namespaces.
-api.add_namespace(info, path=f'/info')
+api.add_namespace(info, path='/info')
+api.add_namespace(uploads, path='/uploads')

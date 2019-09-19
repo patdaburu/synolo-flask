@@ -3,12 +3,36 @@
 
 # Created on 9/18/19 by Pat Daburu
 """
-.. currentmodule:: config
+.. currentmodule:: synolo_flask.config
 .. moduleauthor:: Pat Daburu <pat@daburu.net>
 
 This is the primary application configuration.
 """
+from pathlib import Path
 import os
+from typing import Any
+
+
+class Defaults:
+    DEBUG = False
+    TESTING = False
+    UPLOAD_PATH = Path.cwd().resolve() / 'uploads'
+    UPLOAD_EXTENSIONS = {'zip', 'rar', '7z', 'gz', 'json'}
+
+
+# def get_value(name: str, default: Any = None) -> Any:
+#     """
+#     Get a configuration value from the default configuration sources.
+#
+#     :param name: the configuration name
+#     :param default: the value to return if no value is found within the
+#         configuration sources
+#     :return: the value
+#     """
+#     try:
+#         return os.environ[name]
+#     except KeyError:
+#         return getattr(Defaults, name, default)
 
 
 class Config(object):
@@ -17,6 +41,8 @@ class Config(object):
     """
     DEBUG = True if os.environ.get('DEBUG') == 'True' else False
     TESTING = True if os.environ.get('TESTING') == 'True' else False
+    UPLOAD_PATH = os.environ.get('UPLOAD_PATH', Defaults.UPLOAD_PATH)
+    UPLOAD_EXTENSIONS = Defaults.UPLOAD_EXTENSIONS
 
 
 class ProductionConfig(Config):
@@ -45,7 +71,6 @@ class TestingConfig(Config):
     This is the testing configuration.
     """
     DEBUG = True
-    TESTING = True
 
 
 def get_name() -> str:
