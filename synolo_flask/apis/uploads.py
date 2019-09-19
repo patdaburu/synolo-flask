@@ -36,8 +36,45 @@ def allowed_file(filename: str) -> bool:
            app.config['UPLOAD_EXTENSIONS']
 
 
-@api.route('/<string:data>/')
+@api.route('/stitch')
 class UploadStitchResource(Resource):
+
+    @api.doc('Upload the stitch data.')
+    @api.expect(upload_parser)
+    def post(self, data: str):
+        return response(
+            status=JSendStatus.ERROR,
+            message='NOT IMPLEMENTED (stitch)'
+        )
+
+
+@api.route('/schema')
+class UploadSchemaResource(Resource):
+
+    @api.doc('Upload the data schema.')
+    @api.expect(upload_parser)
+    def post(self, data: str):
+        return response(
+            status=JSendStatus.ERROR,
+            message='NOT IMPLEMENTED (schema)'
+        )
+
+
+@api.route('/local')
+class UploadSchemaResource(Resource):
+
+    @api.doc('Upload Data')
+    @api.expect(upload_parser)
+    def post(self, data: str):
+        return response(
+            status=JSendStatus.ERROR,
+            message='NOT IMPLEMENTED (schema)'
+        )
+
+
+
+@api.route('/<string:data>/')
+class UploadTestResource(Resource):
 
     @api.doc('Upload Data')
     @api.expect(upload_parser)

@@ -22,8 +22,8 @@ api = Namespace('exports', description='Export data.')
 
 
 #: `ExportGisResource` filter arguments
-export_gis_parser = reqparse.RequestParser()
-export_gis_parser.add_argument('urn', required=False, action='append')
+export_gis_filter_parser = reqparse.RequestParser()
+export_gis_filter_parser.add_argument('urn', required=False, action='append')
 
 
 def allowed_file(filename: str) -> bool:
@@ -33,12 +33,34 @@ def allowed_file(filename: str) -> bool:
 
 
 @api.route('/gis/')
-class ExportGisResource(Resource):
+class ExportRegionalGisResource(Resource):
 
-    @api.doc('Export GIS data.')
+    @api.doc('Export the regional GIS data set.')
+    def get(self):
+        return response(
+            status=JSendStatus.SUCCESS,
+            message="Success."
+        )
+
+
+@api.route('/gis/<string:urn>')
+class ExportLocalGisResource(Resource):
+
+    @api.doc('Export the local GIS data set.')
+    def get(self, urn: str):
+        return response(
+            status=JSendStatus.SUCCESS,
+            message=urn if urn else 'No URN'
+        )
+
+
+@api.route('/gis/')
+class ExportFilteredGisResource(Resource):
+
+    @api.doc('Export a filtered GIS data set.')
     def post(self):
         # Parse the arguments.
-        args = export_gis_parser.parse_args()
+        args = export_gis_filter_parser.parse_args()
         # Get the filter URNs.
         _urn = args.get('urn')
         # The incoming argument may be a string, a list, or nothing.  Let's
